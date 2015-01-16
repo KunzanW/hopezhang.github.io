@@ -5,6 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
     
+    if (is_home()) {
+      description = config.description;
+      title = config.title + ' | ' + config.subtitle;
+      if (page.current && page.current > 1) {
+        title = 'page ' + page.current + ' | ' + config.title;
+      }
+    } else if (page.current && page.current > 1) {
+      title = 'page ' + page.current + ' | ' + title + ' | ' + config.title;
+      description = 'page ' + page.current + ' | ' + description;
+    } else if (is_post()) {
+      title = title + ' | ' + config.title;
+    }
+
+    if (page.excerpt) {
+      description = strip_html(page.excerpt);
+    } else if (page.content) {
+      description = strip_html(page.content);
+    }
+
+    description = description.substring(0, 200).replace(/^\s+|\s+$/g, '');
 
     <title>
       归档: 2015 
